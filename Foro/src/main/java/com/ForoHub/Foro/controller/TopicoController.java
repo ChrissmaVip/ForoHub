@@ -7,11 +7,7 @@ import com.ForoHub.Foro.Topico.Topico;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,12 +26,22 @@ public class TopicoController {
     //guardar en base de datos
         repositoryTopico.save(topico);
     }
-
+//Listar los topicos
     @GetMapping
     public List<DtoTopicoParaMostrar> listarTopicos() {
 
         return repositoryTopico.findAll().stream()
                 .map(DtoTopicoParaMostrar :: new).toList();
+    }
+
+    //borrar un registro Delete
+    @DeleteMapping("/{id}")
+    @Transactional
+    public void deleteTopico(@PathVariable Long id){
+
+    Topico topico = repositoryTopico.getReferenceById(id);
+    repositoryTopico.delete(topico);
+
     }
 
 
