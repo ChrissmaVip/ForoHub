@@ -1,6 +1,7 @@
 package com.ForoHub.Foro.controller;
 
 import com.ForoHub.Foro.Topico.DtoTopico;
+import com.ForoHub.Foro.Topico.DtoTopicoParaMostrar;
 import com.ForoHub.Foro.Topico.RepositoryTopico;
 import com.ForoHub.Foro.Topico.Topico;
 import jakarta.transaction.Transactional;
@@ -31,9 +32,10 @@ public class TopicoController {
     }
 
     @GetMapping
-    public List<Topico> listarTopicos() {
+    public List<DtoTopicoParaMostrar> listarTopicos() {
 
-        return repositoryTopico.findAll();
+        return repositoryTopico.findAll().stream()
+                .map(DtoTopicoParaMostrar :: new).toList();
     }
 
 
